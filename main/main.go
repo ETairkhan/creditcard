@@ -2,7 +2,7 @@ package main
 
 import (
 	"bufio"
-	"creditcard"
+	"creditcard/validate"
 	"os"
 	"strings"
 )
@@ -13,10 +13,10 @@ func main() {
 		if len(args) > 1 && args[1] == "--stdin" {
 			scanner := bufio.NewScanner(os.Stdin)
 			for scanner.Scan() {
-				creditcard.validate(strings.Fields(scanner.Text()))
+				validate.Validate(strings.Fields(scanner.Text()))
 			}
 		} else {
-			creditcard.validate(args[1:])
+			validate.Validate(args[1:])
 		}
 	}
 }
