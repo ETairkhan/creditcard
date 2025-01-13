@@ -1,23 +1,21 @@
 package validate
 
 import (
-	"errors"
 	"fmt"
 	"strconv"
 )
 
-func Validate(numbers []string) error {
+func Validate(numbers []string) {
 	for _, num := range numbers {
 		if len(num) < 13 {
-			return errors.New("INCORRECT: number too short")
+			fmt.Println("INCORRECT")
 		}
 		if IsValidLuhn(num) {
 			fmt.Println("OK")
 		} else {
-			return errors.New("INCORRECT: invalid number")
+			fmt.Println("INCORRECT")
 		}
 	}
-	return nil
 }
 
 func IsValidLuhn(card string) bool {
