@@ -24,8 +24,6 @@ func main() {
 			if err := scanner.Err(); err != nil {
 				panic(err)
 			}
-		} else {
-			validate.Validate(args[1:])
 		}
 	} else if len(args) > 0 && args[0] == "generate" {
 	}
