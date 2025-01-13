@@ -9,9 +9,10 @@ import (
 	"time"
 )
 
-func generateNumbers(card string, pick bool) {
+func GenerateNumbers(card string, pick bool) {
+	
 	if strings.Count(card, "*") > 4 {
-		fmt.Println("Error: Too many asterisks")
+		fmt.Println("1")
 		os.Exit(1)
 	}
 
