@@ -12,7 +12,7 @@ func Validate(numbers []string) {
 			fmt.Fprintln(os.Stderr, "INCORRECT")
 			os.Exit(1)
 		}
-		if isValidLuhn(num) {
+		if IsValidLuhn(num) {
 			fmt.Println("OK")
 		} else {
 			fmt.Fprintln(os.Stderr, "INCORRECT")
