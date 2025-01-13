@@ -1,4 +1,12 @@
-package creditcard
+package information
+
+import (
+	"bufio"
+	"creditcard/validate"
+	"fmt"
+	"os"
+	"strings"
+)
 
 func loadData(filename string) map[string]string {
 	data := make(map[string]string)
@@ -20,7 +28,7 @@ func loadData(filename string) map[string]string {
 }
 
 func cardInformation(card string, brands, issuers map[string]string) {
-	valid := isValidLuhn(card)
+	valid := validate.IsValidLuhn(card)
 	fmt.Println("Card:", card)
 	fmt.Println("Correct:", valid)
 	for prefix, brand := range brands {

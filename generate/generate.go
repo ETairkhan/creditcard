@@ -1,8 +1,10 @@
-package creditcard
+package generate
 
 import (
+	"creditcard/validate"
 	"fmt"
 	"math/rand"
+	"os"
 	"strings"
 	"time"
 )
@@ -18,7 +20,7 @@ func generateNumbers(card string, pick bool) {
 
 	valid := []string{}
 	for _, num := range results {
-		if isValidLuhn(num) {
+		if validate.IsValidLuhn(num) {
 			valid = append(valid, num)
 		}
 	}

@@ -1,4 +1,11 @@
-package creditcard
+package issue
+
+import (
+	"creditcard/validate"
+	"fmt"
+	"math/rand"
+	"os"
+)
 
 func issueCard(brand, issuer string, brands, issuers map[string]string) {
 	prefix := ""
@@ -25,7 +32,7 @@ func issueCard(brand, issuer string, brands, issuers map[string]string) {
 		for len(number) < 15 {
 			number += fmt.Sprintf("%d", rand.Intn(10))
 		}
-		if isValidLuhn(number) {
+		if validate.IsValidLuhn(number) {
 			fmt.Println(number)
 			break
 		}
