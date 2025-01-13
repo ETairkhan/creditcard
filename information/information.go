@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-func loadData(filename string) map[string]string {
+func LoadData(filename string) map[string]string {
 	data := make(map[string]string)
 	file, err := os.Open(filename)
 	if err != nil {
@@ -27,7 +27,7 @@ func loadData(filename string) map[string]string {
 	return data
 }
 
-func cardInformation(card string, brands, issuers map[string]string) {
+func CardInformation(card string, brands, issuers map[string]string) {
 	valid := validate.IsValidLuhn(card)
 	fmt.Println("Card:", card)
 	fmt.Println("Correct:", valid)

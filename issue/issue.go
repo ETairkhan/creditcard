@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-func issueCard(brand, issuer string, brands, issuers map[string]string) {
+func IssueCard(brand, issuer string, brands, issuers map[string]string) {
 	prefix := ""
 	for p, b := range brands {
 		if b == brand {
