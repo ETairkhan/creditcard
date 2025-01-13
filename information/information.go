@@ -12,7 +12,7 @@ func loadData(filename string) map[string]string {
 	data := make(map[string]string)
 	file, err := os.Open(filename)
 	if err != nil {
-		fmt.Fprintln(os.Stderr, "Error:", err)
+		fmt.Printf("Error: %v\n", err)
 		os.Exit(1)
 	}
 	defer file.Close()

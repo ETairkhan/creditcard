@@ -11,7 +11,7 @@ import (
 
 func generateNumbers(card string, pick bool) {
 	if strings.Count(card, "*") > 4 {
-		fmt.Fprintln(os.Stderr, "Error: Too many asterisks")
+		fmt.Println("Error: Too many asterisks")
 		os.Exit(1)
 	}
 

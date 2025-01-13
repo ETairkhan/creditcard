@@ -23,7 +23,7 @@ func issueCard(brand, issuer string, brands, issuers map[string]string) {
 	}
 
 	if prefix == "" {
-		fmt.Fprintln(os.Stderr, "Error: Brand or Issuer not found")
+		fmt.Println("Error: Brand or Issuer not found")
 		os.Exit(1)
 	}
 
