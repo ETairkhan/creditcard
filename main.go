@@ -113,3 +113,19 @@ func printUsage() {
 	fmt.Println("  information <brand_file> <issuer_file> <card_number>")
 	fmt.Println("  issue <brand_file> <issuer_file> <brand> <issuer>")
 }
+
+
+
+// ./creditcard validat
+// incorrect argument "validat"
+// типа error message
+
+// ./creditcard validate 3717631511358133831515213527517513715376135765312
+
+// очень огромный номер (exit 1)
+// сам я не считаю что это ошибка
+
+
+// `./creditcard information --brands=issuers.txt --issuers=brands.txt "4400430180300003"`
+
+// Exit code 1
