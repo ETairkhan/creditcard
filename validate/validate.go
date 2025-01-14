@@ -2,12 +2,17 @@ package validate
 
 import (
 	"fmt"
+	"os"
 	"strconv"
+	"strings"
 )
 
 func Validate(numbers []string) {
 	for _, num := range numbers {
-		if len(num) < 13 {
+
+		num = strings.ReplaceAll(num, " ", "")
+
+		if len(num) < 13 || len(num) > 19 {
 			fmt.Println("INCORRECT")
 		} else if IsValidLuhn(num) {
 			fmt.Println("OK")
@@ -37,4 +42,13 @@ func IsValidLuhn(card string) bool {
 		return false
 	}
 	return sum%10 == 0
+}
+
+func ValidateData(data map[string]string, fileType string) {
+	for key, value := range data {
+		if len(key) == 0 || len(value) == 0 {
+			fmt.Printf("Error: Invalid entry in %s file: '%s:%s'\n", fileType, key, value)
+			os.Exit(1)
+		}
+	}
 }

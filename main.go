@@ -26,11 +26,15 @@ func main() {
 			}
 
 		} else {
-			validate.Validate(args[1:])
+			cardNumber := strings.Join(args[1:], "") // Join all parts into one number
+			cardNumber = strings.ReplaceAll(cardNumber, " ", "") // Remove spaces
+			validate.Validate([]string{cardNumber})
+
 		}
 	case "generate":
 		if len(args) < 2 {
-			fmt.Println("1")
+			fmt.Println("Error: Missing card number pattern for 'generate'")
+			fmt.Println("Usage: generate [--pick] <card_number_pattern>")
 			os.Exit(1)
 		}
 
@@ -44,7 +48,8 @@ func main() {
 		generate.GenerateNumbers(cardPattern, pick)
 	case "information":
 		if len(args) < 4 {
-			fmt.Println("1")
+			fmt.Println("Error: Missing required arguments for 'information'")
+			fmt.Println("Usage: information --brands=<file> --issuers=<file> <card_number>")
 			os.Exit(1)
 		}
 
@@ -54,8 +59,14 @@ func main() {
 		for _, arg := range args[1:] {
 			if strings.HasPrefix(arg, "--brands=") {
 				brandFile = strings.TrimPrefix(arg, "--brands=")
+				if brandFile != "brands.txt" {
+					os.Exit(1)
+				}
 			} else if strings.HasPrefix(arg, "--issuers=") {
 				issuerFile = strings.TrimPrefix(arg, "--issuers=")
+				if brandFile != "issuers.txt" {
+					os.Exit(1)
+				}
 			} else {
 				cardNumber = arg
 			}
@@ -63,17 +74,24 @@ func main() {
 
 		// Validate
 		if brandFile == "" || issuerFile == "" || cardNumber == "" {
-			fmt.Println("1")
+			fmt.Println("Error: Missing required arguments for 'information'")
+			fmt.Println("Usage: information --brands=<file> --issuers=<file> <card_number>")
 			os.Exit(1)
 		}
 
 		brands := information.LoadData(brandFile)
+		validate.ValidateData(brands, "brands")
+
 		issuers := information.LoadData(issuerFile)
+		validate.ValidateData(issuers, "issuers")
+		// Validate if card number matches any brand prefix
+
 		information.CardInformation(cardNumber, brands, issuers)
 	case "issue":
 
 		if len(args) < 5 {
-			fmt.Println("1")
+			fmt.Println("Error: Missing required arguments for 'issue'")
+			fmt.Println("Usage: issue --brands=<file> --issuers=<file> --brand=<brand> --issuer=<issuer>")
 			os.Exit(1)
 		}
 		var brandFile, issuerFile, brand, issuer string
@@ -91,12 +109,38 @@ func main() {
 		}
 
 		if brandFile == "" || issuerFile == "" || brand == "" || issuer == "" {
-			fmt.Println("1")
+			fmt.Println("Error: Missing required arguments for 'issue'")
+			fmt.Println("Usage: issue --brands=<file> --issuers=<file> --brand=<brand> --issuer=<issuer>")
 			os.Exit(1)
 		}
 
 		brands := information.LoadData(brandFile)
+		validate.ValidateData(brands, "brands")
+
 		issuers := information.LoadData(issuerFile)
+		validate.ValidateData(issuers, "issuers")
+
+		if _, ok := brands[brand]; !ok {
+			fmt.Printf("Error: Brand '%s' not found in brands file\n", brand)
+			os.Exit(1)
+		}
+		if _, ok := issuers[issuer]; !ok {
+			fmt.Printf("Error: Issuer '%s' not found in issuers file\n", issuer)
+			os.Exit(1)
+		}
+
+		// Validate that the issuer matches the brand prefix
+		brandPrefix := ""
+		for prefix, b := range brands {
+			if b == brand {
+				brandPrefix = prefix
+				break
+			}
+		}
+		if !strings.HasPrefix(issuers[issuer], brandPrefix) {
+			fmt.Printf("Error: Issuer '%s' does not match Brand '%s'\n", issuer, brand)
+			os.Exit(1)
+		}
 
 		issue.IssuerCard(brands, issuers, brand, issuer)
 
@@ -113,19 +157,3 @@ func printUsage() {
 	fmt.Println("  information <brand_file> <issuer_file> <card_number>")
 	fmt.Println("  issue <brand_file> <issuer_file> <brand> <issuer>")
 }
-
-
-
-// ./creditcard validat
-// incorrect argument "validat"
-// типа error message
-
-// ./creditcard validate 3717631511358133831515213527517513715376135765312
-
-// очень огромный номер (exit 1)
-// сам я не считаю что это ошибка
-
-
-// `./creditcard information --brands=issuers.txt --issuers=brands.txt "4400430180300003"`
-
-// Exit code 1
