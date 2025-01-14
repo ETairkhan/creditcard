@@ -29,8 +29,16 @@ func LoadData(filename string) map[string]string {
 
 func CardInformation(card string, brands, issuers map[string]string) {
 	valid := validate.IsValidLuhn(card)
-	fmt.Println("Card:", card)
-	fmt.Println("Correct:", valid)
+	fmt.Println(card)
+	if valid {
+		fmt.Println("Correct: yes")
+	}else {
+		fmt.Println("Correct: no")
+		fmt.Println("Card Band: -")
+		fmt.Println("Card Issuer: -")
+		os.Exit(1)
+	}
+	
 	for prefix, brand := range brands {
 		if strings.HasPrefix(card, prefix) {
 			fmt.Println("Card Brand:", brand)

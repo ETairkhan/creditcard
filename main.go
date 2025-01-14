@@ -43,34 +43,65 @@ func main() {
 
 		generate.GenerateNumbers(cardPattern, pick)
 	case "information":
-		// Card information logic
 		if len(args) < 4 {
-			fmt.Println("Usage: info <card_number> <brand_file> <issuer_file>")
+			fmt.Println("Usage: information --brands=<brand_file> --issuers=<issuer_file> <card_number>")
 			os.Exit(1)
 		}
 
-		cardNumber := args[1]
-		brandFile := args[2]
-		issuerFile := args[3]
+		var brandFile, issuerFile, cardNumber string
 
+		// Parse arguments
+		for _, arg := range args[1:] {
+			if strings.HasPrefix(arg, "--brands=") {
+				brandFile = strings.TrimPrefix(arg, "--brands=")
+			} else if strings.HasPrefix(arg, "--issuers=") {
+				issuerFile = strings.TrimPrefix(arg, "--issuers=")
+			} else {
+				cardNumber = arg
+			}
+		}
+
+		// Validate 
+		if brandFile == "" || issuerFile == "" || cardNumber == "" {
+			fmt.Println("Usage: information --brands=<brand_file> --issuers=<issuer_file> <card_number>")
+			os.Exit(1)
+		}
+
+		
 		brands := information.LoadData(brandFile)
 		issuers := information.LoadData(issuerFile)
 		information.CardInformation(cardNumber, brands, issuers)
 	case "issue":
-		// Card issuance logic
+		
 		if len(args) < 5 {
-			fmt.Println("Usage: issue <brand> <issuer> <brand_file> <issuer_file>")
+			fmt.Println("Usage: issue <brand_file> <issuer_file> <brand> <issuer>")
+			os.Exit(1)
+		}
+		var brandFile, issuerFile, brand, issuer string
+
+		for _, arg := range args[1:] {
+			if strings.HasPrefix(arg, "--brands=") {
+				brandFile = strings.TrimPrefix(arg, "--brands=")
+			} else if strings.HasPrefix(arg, "--issuers=") {
+				issuerFile = strings.TrimPrefix(arg, "--issuers=")
+			} else if strings.HasPrefix(arg, "--brand=") {
+				brand = strings.TrimPrefix(arg, "--brand=")
+			} else if strings.HasPrefix(arg, "--issuer=") {
+				issuer = strings.TrimPrefix(arg, "--issuer=")
+			}
+		}
+
+		
+		if brandFile == "" || issuerFile == "" || brand == "" || issuer == "" {
+			fmt.Println("Usage: issue <brand_file> <issuer_file> <brand> <issuer>")
 			os.Exit(1)
 		}
 
-		brand := args[1]
-		issuer := args[2]
-		brandFile := args[3]
-		issuerFile := args[4]
-
+		
 		brands := information.LoadData(brandFile)
 		issuers := information.LoadData(issuerFile)
-		issue.IssueCard(brand, issuer, brands, issuers)
+
+		issue.IssuerCard(brands, issuers, brand, issuer)
 
 	default:
 		printUsage()
