@@ -1,1 +1,1 @@
-this project made tayermek# creditcard
+this project made tayermek

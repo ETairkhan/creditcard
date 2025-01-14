@@ -1,21 +1,31 @@
-package creditcard
+package validate
 
-func validate(numbers []string) {
+import (
+	"fmt"
+	"os"
+	"strconv"
+	"strings"
+)
+
+func Validate(numbers []string) {
+	if numbers[0] == ""{
+		os.Exit(1)
+	}
 	for _, num := range numbers {
-		if len(num) < 13 {
-			fmt.Fprintln(os.Stderr, "INCORRECT")
-			os.Exit(1)
-		}
-		if isValidLuhn(num) {
+
+		num = strings.ReplaceAll(num, " ", "")
+
+		if len(num) < 13 || len(num) > 19 {
+			fmt.Println("INCORRECT")
+		} else if IsValidLuhn(num) {
 			fmt.Println("OK")
 		} else {
-			fmt.Fprintln(os.Stderr, "INCORRECT")
-			os.Exit(1)
+			fmt.Println("INCORRECT")
 		}
 	}
 }
 
-func isValidLuhn(card string) bool {
+func IsValidLuhn(card string) bool {
 	sum, double := 0, false
 	for i := len(card) - 1; i >= 0; i-- {
 		digit, err := strconv.Atoi(string(card[i]))
@@ -31,5 +41,25 @@ func isValidLuhn(card string) bool {
 		sum += digit
 		double = !double
 	}
+	if sum == 0 {
+		return false
+	}
 	return sum%10 == 0
 }
+
+func ValidateData(data map[string]string, fileType string) {
+	for key, value := range data {
+		if len(key) == 0 || len(value) == 0 {
+			fmt.Printf("Error: Invalid entry in %s file: '%s:%s'\n", fileType, key, value)
+			os.Exit(1)
+		}
+	}
+}
+
+// student@ALEM-F3-L05-08:~/creditcard$ ./creditcard validate --stdin
+// 4400430180300003
+// OK
+// 4400430180300003
+// OK
+// 4400430180300003
+// OK

@@ -1,15 +1,17 @@
-package creditcard
+package generate
 
 import (
+	"creditcard/validate"
 	"fmt"
 	"math/rand"
+	"os"
 	"strings"
 	"time"
 )
 
-func generateNumbers(card string, pick bool) {
+func GenerateNumbers(card string, pick bool) {
 	if strings.Count(card, "*") > 4 {
-		fmt.Fprintln(os.Stderr, "Error: Too many asterisks")
+		fmt.Println("1")
 		os.Exit(1)
 	}
 
@@ -18,7 +20,7 @@ func generateNumbers(card string, pick bool) {
 
 	valid := []string{}
 	for _, num := range results {
-		if isValidLuhn(num) {
+		if validate.IsValidLuhn(num) {
 			valid = append(valid, num)
 		}
 	}

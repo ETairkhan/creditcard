@@ -1,10 +1,18 @@
-package creditcard
+package information
 
-func loadData(filename string) map[string]string {
+import (
+	"bufio"
+	"creditcard/validate"
+	"fmt"
+	"os"
+	"strings"
+)
+
+func LoadData(filename string) map[string]string {
 	data := make(map[string]string)
 	file, err := os.Open(filename)
 	if err != nil {
-		fmt.Fprintln(os.Stderr, "Error:", err)
+		fmt.Printf("Error: %v\n", err)
 		os.Exit(1)
 	}
 	defer file.Close()
@@ -19,10 +27,18 @@ func loadData(filename string) map[string]string {
 	return data
 }
 
-func cardInformation(card string, brands, issuers map[string]string) {
-	valid := isValidLuhn(card)
-	fmt.Println("Card:", card)
-	fmt.Println("Correct:", valid)
+func CardInformation(card string, brands, issuers map[string]string) {
+	valid := validate.IsValidLuhn(card)
+	fmt.Println(card)
+	if valid {
+		fmt.Println("Correct: yes")
+	} else {
+		fmt.Println("Correct: no")
+		fmt.Println("Card Band: -")
+		fmt.Println("Card Issuer: -")
+		os.Exit(1)
+	}
+
 	for prefix, brand := range brands {
 		if strings.HasPrefix(card, prefix) {
 			fmt.Println("Card Brand:", brand)
