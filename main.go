@@ -30,7 +30,7 @@ func main() {
 		}
 	case "generate":
 		if len(args) < 2 {
-			fmt.Println("Usage: generate <card_number_pattern> [--pick]")
+			fmt.Println("1")
 			os.Exit(1)
 		}
 
@@ -44,7 +44,7 @@ func main() {
 		generate.GenerateNumbers(cardPattern, pick)
 	case "information":
 		if len(args) < 4 {
-			fmt.Println("Usage: information --brands=<brand_file> --issuers=<issuer_file> <card_number>")
+			fmt.Println("1")
 			os.Exit(1)
 		}
 
@@ -63,7 +63,7 @@ func main() {
 
 		// Validate 
 		if brandFile == "" || issuerFile == "" || cardNumber == "" {
-			fmt.Println("Usage: information --brands=<brand_file> --issuers=<issuer_file> <card_number>")
+			fmt.Println("1")
 			os.Exit(1)
 		}
 
@@ -74,7 +74,7 @@ func main() {
 	case "issue":
 		
 		if len(args) < 5 {
-			fmt.Println("Usage: issue <brand_file> <issuer_file> <brand> <issuer>")
+			fmt.Println("1")
 			os.Exit(1)
 		}
 		var brandFile, issuerFile, brand, issuer string
@@ -93,7 +93,7 @@ func main() {
 
 		
 		if brandFile == "" || issuerFile == "" || brand == "" || issuer == "" {
-			fmt.Println("Usage: issue <brand_file> <issuer_file> <brand> <issuer>")
+			fmt.Println("1")
 			os.Exit(1)
 		}
 
@@ -112,7 +112,7 @@ func main() {
 func printUsage() {
 	fmt.Println("Usage:")
 	fmt.Println("  validate <card_numbers>")
-	fmt.Println("  generate <card_number_pattern> [--pick]")
-	fmt.Println("  information <card_number> <brand_file> <issuer_file>")
-	fmt.Println("  issue <brand> <issuer> <brand_file> <issuer_file>")
+	fmt.Println("  generate [--pick] <card_number_pattern>")
+	fmt.Println("  information <brand_file> <issuer_file> <card_number>")
+	fmt.Println("  issue <brand_file> <issuer_file> <brand> <issuer>")
 }
