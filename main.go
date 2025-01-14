@@ -23,6 +23,7 @@ func main() {
 			scanner := bufio.NewScanner(os.Stdin)
 			for scanner.Scan() {
 				validate.Validate(strings.Fields(scanner.Text()))
+				
 			}
 
 		} else {

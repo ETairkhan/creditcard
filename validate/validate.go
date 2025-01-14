@@ -8,6 +8,9 @@ import (
 )
 
 func Validate(numbers []string) {
+	if numbers[0] == ""{
+		os.Exit(1)
+	}
 	for _, num := range numbers {
 
 		num = strings.ReplaceAll(num, " ", "")
@@ -52,3 +55,11 @@ func ValidateData(data map[string]string, fileType string) {
 		}
 	}
 }
+
+// student@ALEM-F3-L05-08:~/creditcard$ ./creditcard validate --stdin
+// 4400430180300003
+// OK
+// 4400430180300003
+// OK
+// 4400430180300003
+// OK
