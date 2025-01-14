@@ -61,18 +61,17 @@ func main() {
 			}
 		}
 
-		// Validate 
+		// Validate
 		if brandFile == "" || issuerFile == "" || cardNumber == "" {
 			fmt.Println("1")
 			os.Exit(1)
 		}
 
-		
 		brands := information.LoadData(brandFile)
 		issuers := information.LoadData(issuerFile)
 		information.CardInformation(cardNumber, brands, issuers)
 	case "issue":
-		
+
 		if len(args) < 5 {
 			fmt.Println("1")
 			os.Exit(1)
@@ -91,13 +90,11 @@ func main() {
 			}
 		}
 
-		
 		if brandFile == "" || issuerFile == "" || brand == "" || issuer == "" {
 			fmt.Println("1")
 			os.Exit(1)
 		}
 
-		
 		brands := information.LoadData(brandFile)
 		issuers := information.LoadData(issuerFile)
 

@@ -10,7 +10,6 @@ import (
 )
 
 func GenerateNumbers(card string, pick bool) {
-	
 	if strings.Count(card, "*") > 4 {
 		fmt.Println("1")
 		os.Exit(1)

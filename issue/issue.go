@@ -9,7 +9,6 @@ import (
 )
 
 func IssuerCard(brands, issuers map[string]string, brand, issuer string) {
-
 	brand = strings.TrimSpace(brand)
 	issuer = strings.TrimSpace(issuer)
 

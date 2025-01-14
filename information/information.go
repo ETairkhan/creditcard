@@ -32,13 +32,13 @@ func CardInformation(card string, brands, issuers map[string]string) {
 	fmt.Println(card)
 	if valid {
 		fmt.Println("Correct: yes")
-	}else {
+	} else {
 		fmt.Println("Correct: no")
 		fmt.Println("Card Band: -")
 		fmt.Println("Card Issuer: -")
 		os.Exit(1)
 	}
-	
+
 	for prefix, brand := range brands {
 		if strings.HasPrefix(card, prefix) {
 			fmt.Println("Card Brand:", brand)

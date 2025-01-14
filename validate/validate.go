@@ -7,7 +7,7 @@ import (
 
 func Validate(numbers []string) {
 	for _, num := range numbers {
-		if len(num) < 13{
+		if len(num) < 13 {
 			fmt.Println("INCORRECT")
 		} else if IsValidLuhn(num) {
 			fmt.Println("OK")
