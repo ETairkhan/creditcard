@@ -120,28 +120,6 @@ func main() {
 		issuers := information.LoadData(issuerFile)
 		validate.ValidateData(issuers, "issuers")
 
-		if _, ok := brands[brand]; !ok {
-			fmt.Printf("Error: Brand '%s' not found in brands file\n", brand)
-			os.Exit(1)
-		}
-		if _, ok := issuers[issuer]; !ok {
-			fmt.Printf("Error: Issuer '%s' not found in issuers file\n", issuer)
-			os.Exit(1)
-		}
-
-		// Validate that the issuer matches the brand prefix
-		brandPrefix := ""
-		for prefix, b := range brands {
-			if b == brand {
-				brandPrefix = prefix
-				break
-			}
-		}
-		if !strings.HasPrefix(issuers[issuer], brandPrefix) {
-			fmt.Printf("Error: Issuer '%s' does not match Brand '%s'\n", issuer, brand)
-			os.Exit(1)
-		}
-
 		issue.IssuerCard(brands, issuers, brand, issuer)
 
 	default:
