@@ -5,30 +5,47 @@ import (
 	"fmt"
 	"math/rand"
 	"os"
+	"strings"
 )
 
 func IssuerCard(brands, issuers map[string]string, brand, issuer string) {
-	prefix := ""
-	for p, b := range brands {
+
+	brand = strings.TrimSpace(brand)
+	issuer = strings.TrimSpace(issuer)
+
+	brandPrefix := ""
+	for prefix, b := range brands {
 		if b == brand {
-			prefix = p
-			break
-		}
-	}
-	for p, i := range issuers {
-		if i == issuer {
-			prefix = p
+			brandPrefix = prefix
 			break
 		}
 	}
 
-	if prefix == "" {
-		fmt.Println("Error: Brand or Issuer not found")
+	if brandPrefix == "" {
+		fmt.Println("1")
+		os.Exit(1)
+	}
+
+	issuerPrefix := ""
+	for prefix, i := range issuers {
+		if i == issuer {
+			issuerPrefix = prefix
+			break
+		}
+	}
+
+	if issuerPrefix == "" {
+		fmt.Println("1")
+		os.Exit(1)
+	}
+
+	if !strings.HasPrefix(issuerPrefix, brandPrefix) {
+		fmt.Println("1")
 		os.Exit(1)
 	}
 
 	for {
-		number := prefix
+		number := issuerPrefix
 		for len(number) < 15 {
 			number += fmt.Sprintf("%d", rand.Intn(10))
 		}
