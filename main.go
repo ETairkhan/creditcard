@@ -1,15 +1,15 @@
 package main
 
 import (
-	"creditcard/functional"
+	"creditcard/mainFunc"
 	"os"
 )
 
 func main() {
 	args := os.Args[1:]
 	if len(args) == 0 || len(args) <= 1 {
-		functional.printUsage()
+		mainFunc.PrintUsage()
 		os.Exit(1)
 	}
-	functional.Functional(args[1:])
+	mainFunc.Functional(args[1:])
 }

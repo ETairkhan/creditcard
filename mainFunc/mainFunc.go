@@ -1,4 +1,4 @@
-package functional
+package mainFunc
 
 import (
 	"bufio"
@@ -160,12 +160,12 @@ func Functional(args []string) {
 		issue.IssuerCard(brands, issuers, brand, issuer)
 
 	default:
-		printUsage()
+		PrintUsage()
 		os.Exit(1)
 	}
 }
 
-func printUsage() {
+func PrintUsage() {
 	fmt.Println("Usage:")
 	fmt.Println("  validate <card_numbers>          - Validate one or more card numbers")
 	fmt.Println("  validate --stdin                 - Validate card numbers via standard input")
