@@ -1,4 +1,7 @@
-Kaspi Gold:440043
+
+
+
+Kaspi Gold::
 Forte Black:404243
 Forte Blue:517792
 Halyk Bonus:440563
