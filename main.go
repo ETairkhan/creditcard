@@ -13,7 +13,7 @@ import (
 
 func main() {
 	args := os.Args[1:]
-	if len(args) == 0 {
+	if len(args) == 0  || len(args) <= 1{
 		printUsage()
 		os.Exit(1)
 	}
@@ -23,7 +23,7 @@ func main() {
 			scanner := bufio.NewScanner(os.Stdin)
 			for scanner.Scan() {
 				validate.Validate(strings.Fields(scanner.Text()))
-				
+
 			}
 
 		} else {
@@ -31,7 +31,7 @@ func main() {
 
 		}
 	case "generate":
-		if len(args) <= 2 {
+		if len(args) < 2 {
 			fmt.Println("Error: Missing card number pattern for 'generate'")
 			fmt.Println("Usage: generate [--pick] <card_number_pattern>")
 			os.Exit(1)
@@ -85,9 +85,8 @@ func main() {
 
 		issuers := information.LoadData(issuerFile)
 		validate.ValidateData(issuers, "issuers")
-		
 
-		information.CardInformation( brands, issuers, cardNumber)
+		information.CardInformation(brands, issuers, cardNumber)
 	case "issue":
 
 		if len(args) < 5 {
