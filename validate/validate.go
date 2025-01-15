@@ -17,10 +17,12 @@ func Validate(numbers []string) {
 
 		if len(num) < 13 || len(num) > 19 {
 			fmt.Println("INCORRECT")
+			os.Exit(1)
 		} else if IsValidLuhn(num) {
 			fmt.Println("OK")
 		} else {
 			fmt.Println("INCORRECT")
+			os.Exit(1)
 		}
 	}
 }

@@ -10,7 +10,7 @@ import (
 )
 
 func GenerateNumbers(card string, pick bool) {
-	if len(card) < 13 || len(card) > 19{
+	if len(card) < 13 || len(card) > 19 {
 		fmt.Println("Error: not correct length for the card")
 		os.Exit(1)
 	}

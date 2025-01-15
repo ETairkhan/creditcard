@@ -27,28 +27,31 @@ func LoadData(filename string) map[string]string {
 	return data
 }
 
-func CardInformation(brands, issuers map[string]string, card string) {
-	valid := validate.IsValidLuhn(card)
-	fmt.Println(card)
-	if valid {
-		fmt.Println("Correct: yes")
-	} else {
-		fmt.Println("Correct: no")
-		fmt.Println("Card Band: -")
-		fmt.Println("Card Issuer: -")
-		os.Exit(1)
-	}
+func CardInformation(brands, issuers map[string]string, cards []string) {
+	for _, card := range cards{
+		valid := validate.IsValidLuhn(card)
+		fmt.Println(card)
+		if valid {
+			fmt.Println("Correct: yes")
+		} else {
+			fmt.Println("Correct: no")
+			fmt.Println("Card Band: -")
+			fmt.Println("Card Issuer: -")
+			return
+		}
 
-	for prefix, brand := range brands {
-		if strings.HasPrefix(card, prefix) {
-			fmt.Println("Card Brand:", brand)
-			break
+		for prefix, brand := range brands {
+			if strings.HasPrefix(card, prefix) {
+				fmt.Println("Card Brand:", brand)
+				break
+			}
 		}
-	}
-	for prefix, issuer := range issuers {
-		if strings.HasPrefix(card, prefix) {
-			fmt.Println("Card Issuer:", issuer)
-			break
+		for prefix, issuer := range issuers {
+			if strings.HasPrefix(card, prefix) {
+				fmt.Println("Card Issuer:", issuer)
+				break
+			}
 		}
+		fmt.Println()
 	}
 }

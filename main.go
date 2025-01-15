@@ -56,13 +56,15 @@ func main() {
 
 		generate.GenerateNumbers(cardPattern, pick)
 	case "information":
-		if len(args) < 4 {
+		if len(args) < 3 {
 			fmt.Println("Error: Missing required arguments for 'information'")
 			fmt.Println("Usage: information --brands=<file> --issuers=<file> <card_number>")
 			os.Exit(1)
 		}
 
-		var brandFile, issuerFile, cardNumber string
+		var brandFile, issuerFile string
+		var cardNumbers []string
+		useStdin := false
 
 		for _, arg := range args[1:] {
 			if strings.HasPrefix(arg, "--brands=") {
@@ -75,12 +77,13 @@ func main() {
 				if issuerFile != "issuers.txt" {
 					os.Exit(1)
 				}
+			} else if arg == "--stdin" {
+				useStdin = true
 			} else {
-				cardNumber = arg
+				cardNumbers = append(cardNumbers, arg)
 			}
 		}
-
-		if brandFile == "" || issuerFile == "" || cardNumber == "" {
+		if brandFile == "" || issuerFile == "" {
 			fmt.Println("Error: Missing required arguments for 'information'")
 			fmt.Println("Usage: information --brands=<file> --issuers=<file> <card_number>")
 			os.Exit(1)
@@ -100,7 +103,28 @@ func main() {
 		}
 		validate.ValidateData(issuers, "issuers")
 
-		information.CardInformation(brands, issuers, cardNumber)
+		if useStdin {
+		
+			scanner := bufio.NewScanner(os.Stdin)
+			for scanner.Scan() {
+				line := strings.TrimSpace(scanner.Text())
+				if line != "" {
+					cardNumbers = append(cardNumbers, line)
+				}
+			}
+			if err := scanner.Err(); err != nil {
+				fmt.Printf("Error reading from stdin: %v\n", err)
+				os.Exit(1)
+			}
+		}
+
+		if len(cardNumbers) == 0 {
+			fmt.Println("Error: Missing required arguments for 'information'")
+			fmt.Println("Usage: information --brands=<file> --issuers=<file> <card_number>")
+			os.Exit(1)
+		}
+
+		information.CardInformation(brands, issuers, cardNumbers)
 	case "issue":
 
 		if len(args) < 5 {

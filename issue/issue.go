@@ -21,7 +21,7 @@ func IssuerCard(brands, issuers map[string]string, brand, issuer string) {
 	}
 
 	if brandPrefix == "" {
-		fmt.Println("1")
+		fmt.Println("Error: Brand not found in the provided data.")
 		os.Exit(1)
 	}
 
@@ -34,12 +34,12 @@ func IssuerCard(brands, issuers map[string]string, brand, issuer string) {
 	}
 
 	if issuerPrefix == "" {
-		fmt.Println("1")
+		fmt.Println("Error: Issuer not found in the provided data.")
 		os.Exit(1)
 	}
 
 	if !strings.HasPrefix(issuerPrefix, brandPrefix) {
-		fmt.Println("1")
+		fmt.Println("Error: Issuer prefix does not match the brand prefix.")
 		os.Exit(1)
 	}
 
