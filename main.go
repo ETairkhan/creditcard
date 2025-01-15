@@ -19,24 +19,28 @@ func main() {
 	}
 	switch args[0] {
 	case "validate":
-		if len(args) > 1 && args[1] == "--stdin" {
-			scanner := bufio.NewScanner(os.Stdin)
-			for scanner.Scan() {
-				line := strings.TrimSpace(scanner.Text())
-				if line == "exit" {
-					fmt.Println("Exiting...")
-					os.Exit(0)
-				}
-				if line == "" {
-					continue
-				}
-				numbers := strings.Fields(line)
-				if len(numbers) == 0 {
-					continue
-				}
-				validate.Validate(numbers)
-			}
 
+		if len(args) > 1 {
+			for _, arg := range args {
+				if arg == "--stdin" {
+					scanner := bufio.NewScanner(os.Stdin)
+					for scanner.Scan() {
+						line := strings.TrimSpace(scanner.Text())
+						if line == "exit" {
+							fmt.Println("Exiting...")
+							os.Exit(0)
+						}
+						if line == "" {
+							continue
+						}
+						numbers := strings.Fields(line)
+						if len(numbers) == 0 {
+							continue
+						}
+						validate.Validate(numbers)
+					}
+				}
+			}
 		} else {
 			validate.Validate(args[1:])
 		}
