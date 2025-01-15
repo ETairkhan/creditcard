@@ -104,7 +104,7 @@ func main() {
 		validate.ValidateData(issuers, "issuers")
 
 		if useStdin {
-		
+
 			scanner := bufio.NewScanner(os.Stdin)
 			for scanner.Scan() {
 				line := strings.TrimSpace(scanner.Text())

@@ -28,7 +28,7 @@ func LoadData(filename string) map[string]string {
 }
 
 func CardInformation(brands, issuers map[string]string, cards []string) {
-	for _, card := range cards{
+	for _, card := range cards {
 		valid := validate.IsValidLuhn(card)
 		fmt.Println(card)
 		if valid {

@@ -43,14 +43,17 @@ func IssuerCard(brands, issuers map[string]string, brand, issuer string) {
 		os.Exit(1)
 	}
 
-	for {
+	maxAttempts := 1000
+	for attempts := 0; attempts < maxAttempts; attempts++ {
 		number := issuerPrefix
 		for len(number) < 15 {
 			number += fmt.Sprintf("%d", rand.Intn(10))
 		}
 		if validate.IsValidLuhn(number) {
 			fmt.Println(number)
-			break
+			return
 		}
 	}
+	fmt.Println("Error: Failed to generate a valid Luhn number after maximum attempts.")
+	os.Exit(1)
 }
