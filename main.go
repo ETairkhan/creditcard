@@ -7,9 +7,9 @@ import (
 
 func main() {
 	args := os.Args[1:]
-	if len(args) == 0 || len(args) <= 1 {
+	if len(args) == 0 {
 		mainFunc.PrintUsage()
 		os.Exit(1)
 	}
-	mainFunc.Functional(args[1:])
+	mainFunc.Functional(args)
 }

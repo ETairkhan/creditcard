@@ -1,5 +1,6 @@
 package mainFunc
 
+//checking push from home
 import (
 	"bufio"
 	"creditcard/generate"
@@ -15,7 +16,7 @@ func Functional(args []string) {
 	switch args[0] {
 	case "validate":
 
-		if len(args) > 1 {
+		if len(args) > 2 {
 			for _, arg := range args {
 				if arg == "--stdin" {
 					scanner := bufio.NewScanner(os.Stdin)
