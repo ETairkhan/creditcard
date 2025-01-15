@@ -49,7 +49,7 @@ func IsValidLuhn(card string) bool {
 
 func ValidateData(data map[string]string, fileType string) {
 	for key, value := range data {
-		if len(key) == 0 || len(value) == 0 {
+		if key == "" || value == "" {
 			fmt.Printf("Error: Invalid entry in %s file: '%s:%s'\n", fileType, key, value)
 			os.Exit(1)
 		}

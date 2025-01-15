@@ -87,9 +87,17 @@ func main() {
 		}
 
 		brands := information.LoadData(brandFile)
+		if brands == nil {
+			fmt.Printf("Error: Could not load brands data from %s\n", brandFile)
+			os.Exit(1)
+		}
 		validate.ValidateData(brands, "brands")
 
 		issuers := information.LoadData(issuerFile)
+		if issuers == nil {
+			fmt.Printf("Error: Could not load issuers data from %s\n", issuerFile)
+			os.Exit(1)
+		}
 		validate.ValidateData(issuers, "issuers")
 
 		information.CardInformation(brands, issuers, cardNumber)
@@ -136,8 +144,11 @@ func main() {
 
 func printUsage() {
 	fmt.Println("Usage:")
-	fmt.Println("  validate <card_numbers>")
-	fmt.Println("  generate [--pick] <card_number_pattern>")
-	fmt.Println("  information <brand_file> <issuer_file> <card_number>")
-	fmt.Println("  issue <brand_file> <issuer_file> <brand> <issuer>")
+	fmt.Println("  validate <card_numbers>          - Validate one or more card numbers")
+	fmt.Println("  validate --stdin                 - Validate card numbers via standard input")
+	fmt.Println("  generate [--pick] <pattern>      - Generate card numbers using a pattern")
+	fmt.Println("  information --brands=<file> --issuers=<file> <card_number>")
+	fmt.Println("                                   - Retrieve brand and issuer information")
+	fmt.Println("  issue --brands=<file> --issuers=<file> --brand=<brand> --issuer=<issuer>")
+	fmt.Println("                                   - Issue a new card with specified brand and issuer")
 }
