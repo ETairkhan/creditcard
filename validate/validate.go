@@ -8,7 +8,7 @@ import (
 )
 
 func Validate(numbers []string) {
-	if numbers[0] == ""{
+	if numbers[0] == "" {
 		os.Exit(1)
 	}
 	for _, num := range numbers {

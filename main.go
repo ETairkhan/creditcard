@@ -13,7 +13,7 @@ import (
 
 func main() {
 	args := os.Args[1:]
-	if len(args) == 0 {
+	if len(args) == 0 || len(args) <= 1 {
 		printUsage()
 		os.Exit(1)
 	}
@@ -23,14 +23,10 @@ func main() {
 			scanner := bufio.NewScanner(os.Stdin)
 			for scanner.Scan() {
 				validate.Validate(strings.Fields(scanner.Text()))
-				
 			}
 
 		} else {
-			cardNumber := strings.Join(args[1:], "") // Join all parts into one number
-			cardNumber = strings.ReplaceAll(cardNumber, " ", "") // Remove spaces
-			validate.Validate([]string{cardNumber})
-
+			validate.Validate(args[1:])
 		}
 	case "generate":
 		if len(args) < 2 {
