@@ -27,13 +27,11 @@ func main() {
 			}
 
 		} else {
-			cardNumber := strings.Join(args[1:], "") // Join all parts into one number
-			cardNumber = strings.ReplaceAll(cardNumber, " ", "") // Remove spaces
-			validate.Validate([]string{cardNumber})
+			validate.Validate(args[1:])
 
 		}
 	case "generate":
-		if len(args) < 2 {
+		if len(args) <= 2 {
 			fmt.Println("Error: Missing card number pattern for 'generate'")
 			fmt.Println("Usage: generate [--pick] <card_number_pattern>")
 			os.Exit(1)
@@ -61,11 +59,13 @@ func main() {
 			if strings.HasPrefix(arg, "--brands=") {
 				brandFile = strings.TrimPrefix(arg, "--brands=")
 				if brandFile != "brands.txt" {
+					fmt.Print("brand error")
 					os.Exit(1)
 				}
 			} else if strings.HasPrefix(arg, "--issuers=") {
 				issuerFile = strings.TrimPrefix(arg, "--issuers=")
-				if brandFile != "issuers.txt" {
+				if issuerFile != "issuers.txt" {
+					fmt.Print("issuers error")
 					os.Exit(1)
 				}
 			} else {
@@ -85,9 +85,9 @@ func main() {
 
 		issuers := information.LoadData(issuerFile)
 		validate.ValidateData(issuers, "issuers")
-		// Validate if card number matches any brand prefix
+		
 
-		information.CardInformation(cardNumber, brands, issuers)
+		information.CardInformation( brands, issuers, cardNumber)
 	case "issue":
 
 		if len(args) < 5 {
