@@ -22,6 +22,11 @@ func main() {
 		if len(args) > 1 && args[1] == "--stdin" {
 			scanner := bufio.NewScanner(os.Stdin)
 			for scanner.Scan() {
+				exit := ""
+				exit = scanner.Text()
+				if exit == "exit" {
+					os.Exit(1)
+				}
 				validate.Validate(strings.Fields(scanner.Text()))
 			}
 
