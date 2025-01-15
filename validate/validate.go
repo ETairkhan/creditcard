@@ -55,11 +55,3 @@ func ValidateData(data map[string]string, fileType string) {
 		}
 	}
 }
-
-// student@ALEM-F3-L05-08:~/creditcard$ ./creditcard validate --stdin
-// 4400430180300003
-// OK
-// 4400430180300003
-// OK
-// 4400430180300003
-// OK
