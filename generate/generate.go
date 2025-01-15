@@ -12,6 +12,7 @@ import (
 func GenerateNumbers(card string, pick bool) {
 	if strings.Count(card, "*") > 4 {
 		fmt.Println("1")
+		fmt.Println("$ echo $? \n1")
 		os.Exit(1)
 	}
 

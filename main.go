@@ -52,7 +52,6 @@ func main() {
 
 		var brandFile, issuerFile, cardNumber string
 
-		// Parse arguments
 		for _, arg := range args[1:] {
 			if strings.HasPrefix(arg, "--brands=") {
 				brandFile = strings.TrimPrefix(arg, "--brands=")
@@ -61,7 +60,7 @@ func main() {
 				}
 			} else if strings.HasPrefix(arg, "--issuers=") {
 				issuerFile = strings.TrimPrefix(arg, "--issuers=")
-				if brandFile != "issuers.txt" {
+				if issuerFile != "issuers.txt" {
 					os.Exit(1)
 				}
 			} else {
@@ -69,7 +68,6 @@ func main() {
 			}
 		}
 
-		// Validate
 		if brandFile == "" || issuerFile == "" || cardNumber == "" {
 			fmt.Println("Error: Missing required arguments for 'information'")
 			fmt.Println("Usage: information --brands=<file> --issuers=<file> <card_number>")
@@ -81,9 +79,8 @@ func main() {
 
 		issuers := information.LoadData(issuerFile)
 		validate.ValidateData(issuers, "issuers")
-		// Validate if card number matches any brand prefix
 
-		information.CardInformation(cardNumber, brands, issuers)
+		information.CardInformation(brands, issuers, cardNumber)
 	case "issue":
 
 		if len(args) < 5 {

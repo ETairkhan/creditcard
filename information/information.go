@@ -27,7 +27,7 @@ func LoadData(filename string) map[string]string {
 	return data
 }
 
-func CardInformation(card string, brands, issuers map[string]string) {
+func CardInformation( brands, issuers map[string]string, card string) {
 	valid := validate.IsValidLuhn(card)
 	fmt.Println(card)
 	if valid {
