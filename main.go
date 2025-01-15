@@ -23,18 +23,18 @@ func main() {
 			scanner := bufio.NewScanner(os.Stdin)
 			for scanner.Scan() {
 				line := strings.TrimSpace(scanner.Text())
-				if line == "exit" {                     
+				if line == "exit" {
 					fmt.Println("Exiting...")
 					os.Exit(0)
 				}
-				if line == "" {                          
+				if line == "" {
 					continue
 				}
-				numbers := strings.Fields(line)   
-				if len(numbers) == 0 {                 
+				numbers := strings.Fields(line)
+				if len(numbers) == 0 {
 					continue
 				}
-				validate.Validate(numbers)   
+				validate.Validate(numbers)
 			}
 
 		} else {
