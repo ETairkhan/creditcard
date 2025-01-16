@@ -36,24 +36,27 @@ func CardInformation(brands, issuers map[string]string, cards []string) {
 		} else {
 
 			fmt.Println("Correct: no")
-			fmt.Println("Card Band: -")
+			fmt.Println("Card Brand: -")
 			fmt.Println("Card Issuer: -")
 			os.Exit(1)
 			return
 		}
-
+		brand_result := "-"
+		issuer_result := "-"
 		for prefix, brand := range brands {
 			if strings.HasPrefix(card, prefix) {
-				fmt.Println("Card Brand:", brand)
+				brand_result = brand
 				break
 			}
 		}
+		fmt.Println("Card Brand:", brand_result)
 		for prefix, issuer := range issuers {
 			if strings.HasPrefix(card, prefix) {
-				fmt.Println("Card Issuer:", issuer)
+				issuer_result = issuer
 				break
 			}
 		}
+		fmt.Println("Card Issuer:", issuer_result)
 		fmt.Println()
 	}
 }
