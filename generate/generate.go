@@ -21,7 +21,6 @@ func GenerateNumbers(card string, pick bool) {
 	}
 
 	if strings.Count(card, "*") > 4 {
-		fmt.Println("$ echo $? \n1")
 		os.Exit(1)
 	}
 
@@ -32,6 +31,8 @@ func GenerateNumbers(card string, pick bool) {
 	for _, num := range results {
 		if validate.IsValidLuhn(num) {
 			valid = append(valid, num)
+		}else {
+			os.Exit(1)
 		}
 	}
 

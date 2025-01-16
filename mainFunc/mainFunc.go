@@ -1,6 +1,6 @@
 package mainFunc
 
-//checking push from home
+// checking push from home
 import (
 	"bufio"
 	"creditcard/generate"
@@ -15,6 +15,11 @@ import (
 func Functional(args []string) {
 	switch args[0] {
 	case "validate":
+		if len(args) < 2 {
+			fmt.Println("Error: Missing card numbers or --stdin flag for validation")
+			PrintUsage()
+			os.Exit(1)
+		}
 
 		if len(args) > 2 {
 			for _, arg := range args {
@@ -27,14 +32,18 @@ func Functional(args []string) {
 							os.Exit(0)
 						}
 						if line == "" {
-							continue
+							fmt.Println("INCORRECT")
+							os.Exit(1)
 						}
 						numbers := strings.Fields(line)
 						if len(numbers) == 0 {
-							continue
+							fmt.Println("INCORRECT")
+							os.Exit(1)
 						}
 						validate.Validate(numbers)
 					}
+				} else {
+					os.Exit(1)
 				}
 			}
 		} else {
