@@ -22,6 +22,7 @@ func LoadData(filename string) map[string]string {
 		parts := strings.Split(scanner.Text(), ":")
 		if len(parts) == 2 {
 			data[parts[1]] = parts[0]
+
 		}
 	}
 	return data
@@ -34,9 +35,11 @@ func CardInformation(brands, issuers map[string]string, cards []string) {
 		if valid {
 			fmt.Println("Correct: yes")
 		} else {
+
 			fmt.Println("Correct: no")
 			fmt.Println("Card Band: -")
 			fmt.Println("Card Issuer: -")
+			os.Exit(1)
 			return
 		}
 
