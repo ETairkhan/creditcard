@@ -1,6 +1,5 @@
 package mainFunc
 
-// checking push from home
 import (
 	"bufio"
 	"creditcard/generate"
@@ -130,7 +129,6 @@ func Functional(args []string) {
 			for scanner.Scan() {
 				line := strings.TrimSpace(scanner.Text())
 				if line != "" {
-					// Split the line into fields and append each card number
 					fields := strings.Fields(line)
 					cardNumbers = append(cardNumbers, fields...)
 				}

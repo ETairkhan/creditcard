@@ -22,7 +22,6 @@ func LoadData(filename string) map[string]string {
 		parts := strings.Split(scanner.Text(), ":")
 		if len(parts) == 2 {
 			data[parts[1]] = parts[0]
-
 		}
 	}
 	return data
