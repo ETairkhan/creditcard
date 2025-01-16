@@ -21,7 +21,7 @@ func IssuerCard(brands, issuers map[string]string, brand, issuer string) {
 	}
 
 	if brandPrefix == "" {
-		fmt.Println("1")
+		fmt.Println("Error: Brand not found in the provided data.")
 		os.Exit(1)
 	}
 
@@ -34,23 +34,26 @@ func IssuerCard(brands, issuers map[string]string, brand, issuer string) {
 	}
 
 	if issuerPrefix == "" {
-		fmt.Println("1")
+		fmt.Println("Error: Issuer not found in the provided data.")
 		os.Exit(1)
 	}
 
 	if !strings.HasPrefix(issuerPrefix, brandPrefix) {
-		fmt.Println("1")
+		fmt.Println("Error: Issuer prefix does not match the brand prefix.")
 		os.Exit(1)
 	}
 
-	for {
+	maxAttempts := 1000
+	for attempts := 0; attempts < maxAttempts; attempts++ {
 		number := issuerPrefix
 		for len(number) < 15 {
 			number += fmt.Sprintf("%d", rand.Intn(10))
 		}
 		if validate.IsValidLuhn(number) {
 			fmt.Println(number)
-			break
+			return
 		}
 	}
+	fmt.Println("Error: Failed to generate a valid Luhn number after maximum attempts.")
+	os.Exit(1)
 }

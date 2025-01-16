@@ -10,6 +10,16 @@ import (
 )
 
 func GenerateNumbers(card string, pick bool) {
+	if len(card) < 13 || len(card) > 19 {
+		fmt.Println("Error: not correct length for the card")
+		os.Exit(1)
+	}
+	firstAsterisk := strings.Index(card, "*")
+	if firstAsterisk != -1 && firstAsterisk != len(card)-strings.Count(card[firstAsterisk:], "*") {
+		fmt.Println("Error: Asterisks must only appear at the end.")
+		os.Exit(1)
+	}
+
 	if strings.Count(card, "*") > 4 {
 		fmt.Println("$ echo $? \n1")
 		os.Exit(1)
