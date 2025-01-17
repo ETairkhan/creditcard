@@ -8,19 +8,12 @@ import (
 	"strings"
 )
 
-func IssuerCard(brands, issuers map[string]string, brand, issuer string) {
+func IssuerCard(brands map[string][]string, issuers map[string]string, brand, issuer string) {
 	brand = strings.TrimSpace(brand)
 	issuer = strings.TrimSpace(issuer)
 
-	brandPrefix := ""
-	for prefix, b := range brands {
-		if b == brand {
-			brandPrefix = prefix
-			break
-		}
-	}
-
-	if brandPrefix == "" {
+	brandPrefixes, found := brands[brand]
+	if !found {
 		fmt.Println("Error: Brand not found in the provided data.")
 		os.Exit(1)
 	}
@@ -38,12 +31,20 @@ func IssuerCard(brands, issuers map[string]string, brand, issuer string) {
 		os.Exit(1)
 	}
 
-	if !strings.HasPrefix(issuerPrefix, brandPrefix) {
-		fmt.Println("Error: Issuer prefix does not match the brand prefix.")
+	validPrefix := false
+	for _, brandPrefix := range brandPrefixes {
+		if strings.HasPrefix(issuerPrefix, brandPrefix) {
+			validPrefix = true
+			break
+		}
+	}
+
+	if !validPrefix {
+		fmt.Printf("Error: Issuer prefix '%s' does not match any prefix for brand '%s'.\n", issuerPrefix, brand)
 		os.Exit(1)
 	}
 
-	maxAttempts := 1000
+	maxAttempts := 10000
 	for attempts := 0; attempts < maxAttempts; attempts++ {
 		number := issuerPrefix
 		for len(number) < 15 {

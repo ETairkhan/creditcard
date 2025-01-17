@@ -69,10 +69,24 @@ func Functional(args []string) {
 		}
 
 		pick := false
-		cardPattern := args[1]
-		if len(args) > 2 && args[1] == "--pick" {
-			pick = true
-			cardPattern = args[2]
+		cardPattern := ""
+
+		for _, arg := range args[1:] {
+			if arg == "--pick" {
+				pick = true
+				continue
+			}
+
+			if cardPattern == "" && cardPattern != "generate" {
+				cardPattern = arg
+			} else {
+				continue
+			}
+		}
+		if cardPattern == "" {
+			fmt.Println("Error: Missing card number pattern for 'generate'")
+			fmt.Println("Usage: generate [--pick] <card_number_pattern>")
+			os.Exit(1)
 		}
 
 		generate.GenerateNumbers(cardPattern, pick)
@@ -173,8 +187,28 @@ func Functional(args []string) {
 			os.Exit(1)
 		}
 
-		brands := information.LoadData(brandFile)
-		validate.ValidateData(brands, "brands")
+		brands := make(map[string][]string)
+		brandData, err := os.ReadFile(brandFile)
+		if err != nil {
+			fmt.Printf("Error: Failed to read brands file '%s': %v\n", brandFile, err)
+			os.Exit(1)
+		}
+
+		lines := strings.Split(string(brandData), "\n")
+		for _, line := range lines {
+			line = strings.TrimSpace(line)
+			if line == "" {
+				continue
+			}
+			parts := strings.Split(line, ":")
+			if len(parts) != 2 {
+				fmt.Printf("Error: Invalid line in brands file: '%s'\n", line)
+				os.Exit(1)
+			}
+			brandName := strings.TrimSpace(parts[0])
+			prefix := strings.TrimSpace(parts[1])
+			brands[brandName] = append(brands[brandName], prefix)
+		}
 
 		issuers := information.LoadData(issuerFile)
 		validate.ValidateData(issuers, "issuers")
