@@ -1,6 +1,5 @@
 package mainFunc
 
-//checking push from home
 import (
 	"bufio"
 	"creditcard/generate"
@@ -15,31 +14,53 @@ import (
 func Functional(args []string) {
 	switch args[0] {
 	case "validate":
+		if len(args) < 2 {
+			fmt.Println("Error: Missing card numbers or --stdin flag for validation")
+			PrintUsage()
+			os.Exit(1)
+		}
 
-		if len(args) > 2 {
-			for _, arg := range args {
-				if arg == "--stdin" {
-					scanner := bufio.NewScanner(os.Stdin)
-					for scanner.Scan() {
-						line := strings.TrimSpace(scanner.Text())
-						if line == "exit" {
-							fmt.Println("Exiting...")
-							os.Exit(0)
-						}
-						if line == "" {
-							continue
-						}
-						numbers := strings.Fields(line)
-						if len(numbers) == 0 {
-							continue
-						}
-						validate.Validate(numbers)
-					}
+		useStdin := false
+
+		for _, arg := range args {
+			if arg == "--stdin" {
+				useStdin = true
+				break
+			}
+		}
+
+		if useStdin {
+			scanner := bufio.NewScanner(os.Stdin)
+			for scanner.Scan() {
+				line := strings.TrimSpace(scanner.Text())
+				if line == "exit" {
+					fmt.Println("Exiting...")
+					os.Exit(0)
 				}
+				if line == "" {
+
+					fmt.Println("INCORRECT")
+					os.Exit(1)
+
+				}
+				numbers := strings.Fields(line)
+				if len(numbers) > 0 {
+					validate.Validate(numbers)
+				} else {
+
+					fmt.Println("INCORRECT")
+					os.Exit(1)
+				}
+			}
+
+			if err := scanner.Err(); err != nil {
+				fmt.Printf("Error reading from stdin: %v\n", err)
+				os.Exit(1)
 			}
 		} else {
 			validate.Validate(args[1:])
 		}
+
 	case "generate":
 		if len(args) < 2 {
 			fmt.Println("Error: Missing card number pattern for 'generate'")
@@ -104,12 +125,12 @@ func Functional(args []string) {
 		validate.ValidateData(issuers, "issuers")
 
 		if useStdin {
-
 			scanner := bufio.NewScanner(os.Stdin)
 			for scanner.Scan() {
 				line := strings.TrimSpace(scanner.Text())
 				if line != "" {
-					cardNumbers = append(cardNumbers, line)
+					fields := strings.Fields(line)
+					cardNumbers = append(cardNumbers, fields...)
 				}
 			}
 			if err := scanner.Err(); err != nil {

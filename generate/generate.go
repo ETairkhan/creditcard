@@ -20,8 +20,8 @@ func GenerateNumbers(card string, pick bool) {
 		os.Exit(1)
 	}
 
-	if strings.Count(card, "*") > 4 {
-		fmt.Println("$ echo $? \n1")
+	if strings.Count(card, "*") > 4 || strings.Count(card, "*") == 0 {
+		fmt.Println("Error: Many asterisk or no asterisk")
 		os.Exit(1)
 	}
 
@@ -32,6 +32,8 @@ func GenerateNumbers(card string, pick bool) {
 	for _, num := range results {
 		if validate.IsValidLuhn(num) {
 			valid = append(valid, num)
+		} else {
+			continue
 		}
 	}
 

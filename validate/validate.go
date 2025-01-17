@@ -9,6 +9,7 @@ import (
 
 func Validate(numbers []string) {
 	if numbers[0] == "" {
+		fmt.Println("INCORRECT")
 		os.Exit(1)
 	}
 	for _, num := range numbers {
