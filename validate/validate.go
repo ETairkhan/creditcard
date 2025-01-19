@@ -58,3 +58,5 @@ func ValidateData(data map[string]string, fileType string) {
 		}
 	}
 }
+
+// smth
