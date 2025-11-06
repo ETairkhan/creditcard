@@ -1,177 +1,125 @@
-Credit Card Tool
+# Credit Card Utility CLI
 
-A comprehensive Go-based command-line tool for credit card number validation, generation, and information lookup. This project implements industry-standard algorithms and patterns for working with credit card numbers.
-🚀 Features
-🔍 Validate
+A versatile command-line interface (CLI) tool for generating, validating, and obtaining information about credit cards. This application is designed for developers, testers, and businesses needing reliable utilities for handling credit card data.
 
-Verify credit card numbers using Luhn's algorithm with support for multiple inputs and stdin:
+## Features
 
-    Checks number length (minimum 13 digits)
+- **Validate**: Check if credit card numbers are valid using the Luhn algorithm.
+- **Generate**: Generate random valid credit card numbers for testing purposes.
+- **Information**: Retrieve brand and issuer details for a given credit card number.
+- **Issue**: Generate credit card details for a specific brand and issuer.
 
-    Validates checksum using Luhn's algorithm
+---
 
-    Supports multiple entries and stdin input
+## Installation
 
-🎲 Generate
+1. Clone this repository:
 
-Create possible credit card numbers by replacing asterisks with digits:
+```bash
+git clone https://github.com/your-username/creditcard-cli.git
+```
+2. Navigate to the project directory:
 
-    Replace up to 4 trailing asterisks
+```bash
+git clone https://github.com/your-username/creditcard-cli.git
+```
 
-    Generate all possible valid combinations
+3. Build the binary:
+```bash
+go build -o creditcard
+```
 
-    Optional random selection with --pick flag
+## Usage
 
-ℹ️ Information
+**1. Validate**
 
-Get detailed information about credit card numbers:
+Check if a credit card number is valid.
 
-    Card validity status
+- From stdin:
+```bash
+echo "4400430180300003" "4400430180300011" | ./creditcard validate --stdin
+```
+- Direct input:
+```bash
+./creditcard validate 4400430180300003 4400430180300011
+```
 
-    Brand identification (Visa, MasterCard, AMEX)
+**2. Generate**
 
-    Issuer lookup
+Generate random valid credit card numbers.
 
-    Configurable brand and issuer databases
+- Using a pattern:
 
-🆕 Issue
+```bash
+./creditcard generate <pattern>
+```
 
-Generate random valid credit card numbers for specific brands and issuers:
+Example: Generate a card number starting with 4400:
 
-    Customizable brand and issuer requirements
+```bash
+./creditcard generate 4400
+```
+- Random valid number:
+```bash
+./creditcard generate --pick
+```
 
-    Ensures valid checksum and formatting
+3. Information
 
-🛠 Technologies Used
+Retrieve card brand and issuer details.
 
-    Go (Golang) - Primary programming language
+From stdin:
+```bash
+echo "4400430180300003" | ./creditcard information --stdin --brands brands.txt --issuers issuers.txt
+```
+Direct input:
+```bash
+./creditcard information --brands brands.txt --issuers issuers.txt 4400430180300003
+```
 
-    Luhn's Algorithm - Credit card validation standard
+4. Issue
 
-    Command-line Interface - Native Go flag and os packages
+Generate card details for a specific brand and issuer.
+```bash
+./creditcard issue --brands brands.txt --issuers issuers.txt --brand Visa --issuer
+```
 
-    File I/O - For reading brand and issuer configurations
+## Flags
 
-📋 Prerequisites
+- `--stdin`: Read input from standard input.
+- `--brands`: Path to `brands.txt` file (used for `information` and `issue` features).
+- `--issuers`: Path to `issuers.txt` file (used for `information` and `issue` features).
+- `--pick`: Generate a random valid card number.
+- `<pattern>`: Generate a card number matching a specific pattern.
 
-    Go 1.16 or higher
 
-    Basic understanding of command-line tools
+## File Structure
+```bash
+.
+├── main.go            # Entry point of the CLI application
+├── validate.go        # Functions for validating credit card numbers
+├── generate.go        # Functions for generating card numbers
+├── information.go     # Functions for retrieving brand and issuer info
+├── issue.go           # Functions for issuing credit card details
+├── helpers.go         # Utility functions
+├── brands.txt         # List of card brands
+├── issuers.txt        # List of card issuers
+└── README.md          # Documentation
+```
 
-🔧 Installation
+## Error Handling
 
-    Clone the repository:
+- All errors are logged and handled gracefully using `defer` and `recover`.
+- Invalid inputs will display helpful error messages to guide the user.
 
-bash
+---
 
-git clone <repository-url>
-cd creditcard
+## Contributing
 
-    Build the project:
+Contributions are welcome! Feel free to submit issues or pull requests to improve the project.
 
-bash
+---
 
-go build -o creditcard .
+## License
 
-📖 Usage
-Validate Credit Card Numbers
-bash
-
-# Single validation
-./creditcard validate "4400430180300003"
-
-# Multiple validations
-./creditcard validate "4400430180300003" "4400430180300011"
-
-# Stdin input
-echo "4400430180300003" | ./creditcard validate --stdin
-
-Generate Possible Numbers
-bash
-
-# Generate all possibilities
-./creditcard generate "440043018030****"
-
-# Pick one randomly
-./creditcard generate --pick "440043018030****"
-
-Get Card Information
-bash
-
-./creditcard information --brands=brands.txt --issuers=issuers.txt "4400430180300003"
-
-Issue New Card Numbers
-bash
-
-./creditcard issue --brands=brands.txt --issuers=issuers.txt --brand=VISA --issuer="Kaspi Gold"
-
-🏗 Architecture
-
-The tool follows a modular command-line architecture:
-text
-
-creditcard/
-├── main.go              # CLI entry point and command routing
-├── validation/          # Luhn algorithm implementation
-├── generation/          # Number generation logic
-├── information/         # Brand and issuer lookup
-└── issue/              # Card issuance logic
-
-Key Components:
-
-    Luhn Validator: Implements the checksum algorithm for credit card validation
-
-    Pattern Generator: Handles asterisk replacement and valid number generation
-
-    Brand Matcher: Matches card numbers against brand prefixes
-
-    Issuer Lookup: Identifies issuing institutions based on card prefixes
-
-📁 Configuration Files
-brands.txt Format
-text
-
-VISA:4
-MASTERCARD:51
-MASTERCARD:52
-AMEX:34
-AMEX:37
-
-issuers.txt Format
-text
-
-Kaspi Gold:440043
-Forte Black:404243
-Halyk Bonus:440563
-
-🎯 Learning Objectives
-
-This project demonstrates:
-
-    Algorithms: Implementation of Luhn's algorithm
-
-    I/O Operations: File reading, stdin/stdout handling
-
-    Data Representation: Efficient number processing and validation
-
-    CLI Development: Professional command-line tool design
-
-🔮 Future Improvements
-
-    Support for additional card brands (Discover, UnionPay)
-
-    Batch processing for large datasets
-
-    JSON output format option
-
-    Rate limiting for generation features
-
-    Extended validation rules (expiry dates, CVV)
-
-⚠️ Known Issues
-
-    Maximum 4 asterisks supported in generation mode
-
-    Brand/issuer files must follow exact format
-
-    No internationalization support
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
